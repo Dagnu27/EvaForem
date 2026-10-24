@@ -23,7 +23,7 @@ const dbconnection=require("../db/dbconfig")
 
     } catch (error) {
       console.log(error.message);
-      return res.status(500).json({msg:"some thing went wrong ,try again "})
+      return res.status(500).json({msg:"some thing went wrong ,try again "}) 
       
     }
 
