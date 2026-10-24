@@ -6,7 +6,7 @@ const {register,login,checkUser}=require('../controller/userControlller')
 router.post("/register",register)
 
 // login part 
-router.post("/login",login);
+router.post("/login",login);  
 
 //check user 
 router.get("/check",checkUser)

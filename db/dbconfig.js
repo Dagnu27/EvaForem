@@ -10,9 +10,9 @@ const dbConnection = mysql2.createPool({
 });
 
 // quick connection check
-dbConnection.execute("select 'test'", (err, result) => {
-  if (err) console.log("DB connection failed:", err.message);
-  else console.log("MySQL connected:", result);
-});
+// dbConnection.execute("select 'test'", (err, result) => {
+//   if (err) console.log("DB connection failed:", err.message);
+//   else console.log("MySQL connected:", result);
+// });
 
-module.exports = dbConnection.promise();
+module.exports = dbConnection.promise();  
