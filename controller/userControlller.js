@@ -1,5 +1,5 @@
-const dbconnection=require("../db/dbconfig")
-
+  const dbconnection=require("../db/dbconfig")
+ const bcrypt=require(`bcrypt`)
  async function register(req,res) {
     const {username,firstname,lastname,email,password}=req.body;
     if (!email || !password || !lastname || !firstname || !username ) {
@@ -17,7 +17,15 @@ const dbconnection=require("../db/dbconfig")
    return res.status(400).json({msg:"user already registered"})
   }
 
-      await dbconnection.query("INSERT INTO users (username,firstname,lastname,email,password) VALUES (?,?,?,?,?)",[username,firstname,lastname,email,password])
+if(password.length<=8){
+  return res.status(400).json({msg:"password must be atleast 8 charachter "})
+}
+    
+
+//encryption part to hide the password from data base
+const salt= await bcrypt.genSalt(10)
+const hashedpassword=await bcrypt.hash(password,salt)
+      await dbconnection.query("INSERT INTO users (username,firstname,lastname,email,password) VALUES (?,?,?,?,?)",[username,firstname,lastname,email,hashedpassword])
        return res.status(201).json({msg:"user created "})
 
 
