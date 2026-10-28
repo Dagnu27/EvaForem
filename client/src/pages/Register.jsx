@@ -1,8 +1,9 @@
 import React from 'react'
 import { useRef } from 'react'
 import axios from '../axiosConfig'
-
+import { Navigate, useNavigate } from 'react-router-dom'
 const register = () => {
+
   const userNameDom=useRef(null)
   const firstNameDom=useRef(null)
   const lastNameDom=useRef(null)
@@ -35,8 +36,10 @@ const register = () => {
       password:passwordValue,
 
    });
-
+alert("register seccesed. please login ")
+Navigate('/login')
  } catch (error) {
+  alert("some thing went wrong ")
   console.log(error.response);
   
  }
