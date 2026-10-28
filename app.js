@@ -8,13 +8,14 @@ const dbconnection=require("./db/dbconfig")
 
 //user route middle ware
 const userRoutes=require("./routes/userRoute")
-
+const quationRoutes=require("./routes/quationRoute")
 //json  middleware to extract the json file  
 app.use(express.json())
 
 //user middle were 
 app.use("/api/users",userRoutes)
 //quation middle were ?
+app.use("/api/quastions",quationRoutes)
 //answer middle were ?  
 
  async function start() {

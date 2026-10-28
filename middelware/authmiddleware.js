@@ -13,7 +13,7 @@ const token = authHeader.split(" ")[1];
   try {
     const {usename,userid} = jwt.verify(token, "secret");
     req.user={usename,userid}
-    next();
+    next(); 
   } catch (error) {
     return res
       .status(StatusCodes.UNAUTHORIZED)

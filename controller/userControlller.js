@@ -97,7 +97,10 @@ if(!email || !password ){
 
 
 async function checkUser(req,res) {
-  res.send("checkUser")
+  const username=req.user.username;
+  const userid=req.user.userid;
+  res.status(StatusCodes.OK).json({msg:"valid user ",username,userid})
+ 
 }
 
 module.exports={register,login,checkUser}
