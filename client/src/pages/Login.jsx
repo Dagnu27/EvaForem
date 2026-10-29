@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import axios from '../axiosConfig';
-import { data, useNavigate } from 'react-router-dom';
+import { data, Link, useNavigate } from 'react-router-dom';
 const login = () => {
    const navigate=useNavigate()
    const emailDom = useRef(null);
@@ -27,7 +27,7 @@ const login = () => {
       console.log('Registration response:', response.data);
       alert('login successful.');
       localStorage.setItem('token',data.token)
-      navigate('/Home');
+      navigate('/');
 
     } catch (error) {
       console.error('Registration error:', error);
@@ -57,6 +57,7 @@ const login = () => {
 
         <button type="submit">login</button>
       </form>
+     <Link to='/register'>register</Link>
     </section>
   )
 }

@@ -1,7 +1,10 @@
-  const dbconnection=require("../db/dbconfig")
- const bcrypt=require(`bcrypt`)
-  const {dtatuscode, StatusCodes}=require('http-status-codes')
-  const jwt = require('jsonwebtoken');
+const dbconnection = require("../db/dbconfig");
+const bcrypt = require("bcrypt");
+const { StatusCodes } = require("http-status-codes");
+const jwt = require("jsonwebtoken");
+
+
+
  async function register(req,res) {
     const {username,firstname,lastname,email,password}=req.body;
     if (!email || !password || !lastname || !firstname || !username ) {
@@ -17,7 +20,7 @@
       //  return res.json({user:user})
       
   if(user.length>0){
-   return res.status(StatusCodes.BAD_REQUEST).json({msg:"user already registered"})
+   return res.status(StatusCodes.CONFLICT).json({msg:"user already registered"})
   }
 
 if(password.length<=8){
@@ -66,8 +69,8 @@ if(!email || !password ){
        return res.status(StatusCodes.BAD_GATEWAY).json({msg:"ivalide crendential please try again! "})
     }  
     const username=user[0].username
-    const userid=user[0].userid  
-   const token= jwt.sign({username,userid},"secret",{expiresIn:"1d"} )  
+    const userid = user[0].userId;
+   const token= jwt.sign({username,userid},process.env.JWT_SECRET,{expiresIn:"1d"} )  
     
     return res.status(StatusCodes.OK).json({msg:"user login successfully ",token,username})
     
