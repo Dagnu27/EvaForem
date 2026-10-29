@@ -1,89 +1,95 @@
-import React from 'react'
-import { useRef } from 'react'
-import axios from '../axiosConfig'
-import { Navigate, useNavigate } from 'react-router-dom'
-const register = () => {
 
-  const userNameDom=useRef(null)
-  const firstNameDom=useRef(null)
-  const lastNameDom=useRef(null)
-  const emailDom=useRef(null)
-  const passwordDom=useRef(null)
+import React, { useRef } from 'react';
+import axios from '../axiosConfig';
+import { useNavigate } from 'react-router-dom';
 
- async function handlesubmit(e) {
-  e.preventDefault();
-  const usernameValue=userNameDom.current.value;
-  const firstnameValue=firstNameDom.current.value;
-  const lastnameValue=lastNameDom.current.value;
-  const emailValue=emailDom.current.value;
-  const passwordValue=passwordDom.current.value;
-  if (
-    !usernameValue||
-    !firstnameValue||
-    !lastnameValue||
-    !emailValue||
-    !passwordValue||
-  ) {
-    alert("please provide all requred information ")
-    return;
+const Register = () => {
+  const navigate = useNavigate();
+
+  const userNameDom = useRef(null);
+  const firstNameDom = useRef(null);
+  const lastNameDom = useRef(null);
+  const emailDom = useRef(null);
+  const passwordDom = useRef(null);
+
+  async function handlesubmit(e) {
+    e.preventDefault();
+
+    const usernameValue = userNameDom.current.value.trim();
+    const firstnameValue = firstNameDom.current.value.trim();
+    const lastnameValue = lastNameDom.current.value.trim();
+    const emailValue = emailDom.current.value.trim();
+    const passwordValue = passwordDom.current.value;
+
+    if (
+      !usernameValue ||
+      !firstnameValue ||
+      !lastnameValue ||
+      !emailValue ||
+      !passwordValue
+    ) {
+      alert('Please provide all required information.');
+      return;
+    }
+
+    try {
+      const response = await axios.post('/users/register', {
+        username: usernameValue,
+        firstname: firstnameValue,
+        lastname: lastnameValue,
+        email: emailValue,
+        password: passwordValue,
+      });
+
+      console.log('Registration response:', response.data);
+      alert('Registration successful. Please log in.');
+      navigate('/login');
+
+    } catch (error) {
+      console.error('Registration error:', error);
+      console.error('Backend response:', error.response?.data);
+
+      alert(
+        error.response?.data?.msg ||
+        error.response?.data?.message ||
+        error.message ||
+        'Registration failed.'
+      );
+    }
   }
- try {
-   await axios.post('user/register',{
-      username:usernameValue,
-      firstname:firstnameValue,
-      lastname:lastnameValue,
-      email:emailValue,
-      password:passwordValue,
-
-   });
-alert("register seccesed. please login ")
-Navigate('/login')
- } catch (error) {
-  alert("some thing went wrong ")
-  console.log(error.response);
-  
- }
-  
- }
-
-
 
   return (
     <section>
-     <form onSubmit={handlesubmit}>
-    <div>
-      <span>username:</span>
-      <input   ref={userNameDom} type="text" placeholder='username' />
-    </div>
-   <br />
+      <form onSubmit={handlesubmit}>
+        <div>
+          <label>Username:</label>
+          <input ref={userNameDom} type="text" required />
+        </div>
 
-  <div>
-      <span>firstname:</span>
-      <input ref={firstNameDom} type="text" placeholder='firstname' />
-    </div>
-   <br />
+        <div>
+          <label>First name:</label>
+          <input ref={firstNameDom} type="text" required />
+        </div>
 
-   <div>
-      <span>lastname:</span>
-      <input ref={lastNameDom} type="text" placeholder='lastname' />
-    </div>
-   <br />
+        <div>
+          <label>Last name:</label>
+          <input ref={lastNameDom} type="text" required />
+        </div>
 
-   <div>
-      <span>email:</span>
-      <input ref={emailDom} type="text" placeholder='email' />
-    </div>
-   <br />
+        <div>
+          <label>Email:</label>
+          <input ref={emailDom} type="email" required />
+        </div>
 
-   <div>
-      <span>password:</span>
-      <input ref={passwordDom} type="text" placeholder='password' />
-    </div>
-   <br />
-   <button type='submit'>Register</button>
-     </form>
+        <div>
+          <label>Password:</label>
+          <input ref={passwordDom} type="password" required />
+        </div>
+
+        <button type="submit">Register</button>
+      </form>
     </section>
-  )
-}
+  );
+};
 
-export default register
+export default Register;

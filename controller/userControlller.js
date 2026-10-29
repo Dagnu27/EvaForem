@@ -69,7 +69,7 @@ if(!email || !password ){
     const userid=user[0].userid  
    const token= jwt.sign({username,userid},"secret",{expiresIn:"1d"} )  
     
-    return res.status(StatusCodes.OK).json({msg:"user login successfully ",token})
+    return res.status(StatusCodes.OK).json({msg:"user login successfully ",token,username})
     
   } catch (error) {
      console.log(error.message);
@@ -82,18 +82,6 @@ if(!email || !password ){
 
 
   
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 async function checkUser(req,res) {
