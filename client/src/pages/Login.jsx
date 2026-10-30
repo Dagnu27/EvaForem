@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import axios from '../axiosConfig';
 import { Link, useNavigate } from 'react-router-dom';
+import AuthLayout from '../components/AuthLayout';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,7 +22,6 @@ const Login = () => {
       const { data } = await axios.post('/users/login', { email, password });
       localStorage.setItem('token', data.token);
       navigate('/');
-      window.location.reload(); // makes App re-run checkUser with the new token
     } catch (error) {
       alert(
         error.response?.data?.message ||
@@ -32,20 +32,17 @@ const Login = () => {
   }
 
   return (
-    <section>
+    <AuthLayout>
+      <h3>Login to your account</h3>
+      <p className="auth__sub">
+        Don't have an account? <Link to="/register">Create a new account</Link>
+      </p>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input ref={emailDom} type="email" required />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input ref={passwordDom} type="password" required />
-        </div>
-        <button type="submit">Login</button>
+        <input ref={emailDom} type="email" placeholder="Email address" required />
+        <input ref={passwordDom} type="password" placeholder="Password" required />
+        <button type="submit" className="btn btn--blue btn--full">Login</button>
       </form>
-      <Link to="/register">Create a new account</Link>
-    </section>
+    </AuthLayout>
   );
 };
 

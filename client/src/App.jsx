@@ -5,6 +5,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { useState, useEffect, createContext } from 'react';
 import axios from './axiosConfig';
+import Layout from './components/Layout';
+import AskQuestion from './pages/AskQuestion';
+import QuestionDetail from './pages/QuestionDetail';
 
 export const AppState = createContext();
 
@@ -31,13 +34,17 @@ function App() {
   }, [pathname]);
 
   return (
-    <AppState.Provider value={{ user, setuser }}>
-      <Routes>
+   <AppState.Provider value={{ user, setuser }}>
+    <Routes>
+      <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-      </Routes>
-    </AppState.Provider>
+        <Route path="/ask" element={<AskQuestion />} />
+        <Route path="/question/:id" element={<QuestionDetail />} />
+      </Route>
+    </Routes>
+  </AppState.Provider>
   );
 }
 

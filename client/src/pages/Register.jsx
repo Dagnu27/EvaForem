@@ -2,6 +2,7 @@
 import React, { useRef } from 'react';
 import axios from '../axiosConfig';
 import {Link, useNavigate } from 'react-router-dom';
+import AuthLayout from '../components/AuthLayout';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -59,37 +60,23 @@ const Register = () => {
   }
 
   return (
-    <section>
-      <form onSubmit={handlesubmit}>
-        <div>
-          <label>Username:</label>
-          <input ref={userNameDom} type="text" required />
-        </div>
-
-        <div>
-          <label>First name:</label>
-          <input ref={firstNameDom} type="text" required />
-        </div>
-
-        <div>
-          <label>Last name:</label>
-          <input ref={lastNameDom} type="text" required />
-        </div>
-
-        <div>
-          <label>Email:</label>
-          <input ref={emailDom} type="email" required />
-        </div>
-
-        <div>
-          <label>Password:</label>
-          <input ref={passwordDom} type="password" required />
-        </div>
-
-        <button type="submit">Register</button>
-      </form>
-      <Link to='/login'>login</Link>
-    </section>
+   <AuthLayout>
+    <h3>Join the network</h3>
+    <p className="auth__sub">
+      Already have an account? <Link to="/login">Sign in</Link>
+    </p>
+    <form onSubmit={handlesubmit}>
+      <input ref={userNameDom} type="text" placeholder="Username" required />
+      <div className="row">
+        <input ref={firstNameDom} type="text" placeholder="First name" required />
+        <input ref={lastNameDom} type="text" placeholder="Last name" required />
+      </div>
+      <input ref={emailDom} type="email" placeholder="Email address" required />
+      <input ref={passwordDom} type="password" placeholder="Password" required />
+      <button type="submit" className="btn btn--blue btn--full">Agree and Join</button>
+    </form>
+    <Link to="/login" className="auth__link">Already have an account?</Link>
+  </AuthLayout>
   );
 };
 
